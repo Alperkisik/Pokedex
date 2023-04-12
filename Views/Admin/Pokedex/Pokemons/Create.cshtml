@@ -4,8 +4,9 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     List<Pokedex.Models.Type> Types = ViewBag.Types;
-}
 
+    int count = 1;
+}
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -113,11 +114,12 @@
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <td class="col col-md-8"></td>
-                                                <td class="col col-md-4"></td>
+                                                <td class="col col-md-10"></td>
+                                                <td class="col col-md-2"></td>
                                             </tr>
                                         </thead>
                                         <tbody id="tbbody_selecttype">
+                                            
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -137,8 +139,8 @@
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <td class="col col-md-8"></td>
-                                                <td class="col col-md-4"></td>
+                                                <td class="col col-md-10"></td>
+                                                <td class="col col-md-2"></td>
                                             </tr>
                                         </thead>
                                         <tbody id="tbbody_selectability">
@@ -153,91 +155,6 @@
                             </div>
                         </div>
                     </div>
-                    @*
-                    <div class="card-body row">
-                    <div class="col-md-6">
-                    <div class="card card-primary">
-                    <div class="card-header">
-                    <h3 class="card-title">Types</h3>
-                    </div>
-                    <div class="card-body">
-                    <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                    <td>Type</td>
-                    <td></td>
-                    </tr>
-                    </thead>
-                    <tbody id="tbbody_type">
-                    @if (Model == null || Model.Types == null || Model.Types.Count == 0)
-                    {
-                    }
-                    else if (Model.Types != null && Model.Types.Count > 0)
-                    {
-                    @for (var i = 0; i < Model.Types.Count; i++)
-                    {
-                    <tr>
-                    <td>
-                    <input class="form-control" type="text" name="Types[@i].Content" value="@Model.Types.ToList()[i].Content">
-                    <input class="form-control d-none" type="text" name="Types[@i].Id" value="@Model.Types.ToList()[i].Id">
-                    </td>
-                    <td></td>
-                    </tr>
-                    }
-                    }
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                    <td colspan="2"><input type="button" id="btnAddNewType" value="Add New Type" class="btn btn-primary" /></td>
-                    </tr>
-                    </tfoot>
-                    </table>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="card card-primary">
-                    <div class="card-header">
-                    <h3 class="card-title">Abilities</h3>
-                    </div>
-                    <div class="card-body">
-                    <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                    <td>Name</td>
-                    <td></td>
-                    </tr>
-                    </thead>
-                    <tbody id="tbbody">
-                    @if (Model == null || Model.Abilities == null || Model.Abilities.Count == 0)
-                    {
-                    }
-                    else if (Model.Abilities != null && Model.Abilities.Count > 0)
-                    {
-                    @for (var i = 0; i < Model.Abilities.Count; i++)
-                    {
-                    <tr>
-                    <td>
-                    <input class="form-control d-none" type="text" name="Abilities[@i].Id" value="@Model.Abilities.ToList()[i].Id">
-                    <input class="form-control d-none" type="text" name="Abilities[@i].Type" value="@Model.Abilities.ToList()[i].Type">
-                    <input class="form-control d-none" type="text" name="Abilities[@i].Effect" value="@Model.Abilities.ToList()[i].Effect">
-                    <input class="form-control" type="text" name="Abilities[@i].Name" value="@Model.Abilities.ToList()[i].Name">
-                    </td>
-                    <td></td>
-                    </tr>
-                    }
-                    }
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                    <td colspan="2"><input type="button" id="btnAddNewAbility" value="Add New Ability" class="btn btn-primary" /></td>
-                    </tr>
-                    </tfoot>
-                    </table>
-                    </div>
-                    </div>
-                    </div>
-                    </div>*@
                     <div class="card-body">
                         <div class="row">
                             <h3 class="card-title">Stats</h3>
@@ -325,31 +242,12 @@
     });
 
     $(function () {
-        /*$("#btnAddNewType").click(function () {
-            var count = $("#tbbody_type >tr").length;
-            $("#tbbody_type").append("<tr><td> <input type='text' class='form-control' name='Types[" + count + "].Content' />" +
-                "<input type='text' class='d-none' name='Types[" + count + "].Id' value='0' />" +
-                " </td><td><input type='button' class='btnremove' value='remove'/></td></tr>");
-
-            AddRemoveAction();
-        });
-
-        $("#btnAddNewAbility").click(function () {
-            var count = $("#tbbody >tr").length;
-            $("#tbbody").append("<tr><td> <input type='text' class='form-control' name='Abilities[" + count + "].Name' />" +
-                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Id' value='0' />" +
-                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Effect' value='none' />" +
-                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Type' value='none' />" +
-                "</td><td><input type='button' class='btnremove' value='remove'/></td></tr>");
-
-            AddRemoveAction();
-        });*/
 
         $("#btnAddNewTypeSelect").click(function () {
             var count = $("#tbbody_selecttype >tr").length;
-            $("#tbbody_selecttype").append("<tr><td class='col col-md-8'><div class='form-group'><label class='form-label'>Type : </label> <select class='form-control typeselect' name='Types[" + count + "].Id'></select>" +
+            $("#tbbody_selecttype").append("<tr><td class='col col-md-10'><div class='form-group'><label class='form-label'>Type : </label> <select class='form-control typeselect' name='Types[" + count + "].Id'></select>" +
                 "<input type='text' class='form-control typecontent d-none' name='Types[" + count + "].Content' readonly/></div>" +
-                "</td><td class='col col-md-4'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
+                "</td><td class='col col-md-2'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
 
             AddTypeSelectOptions();
             typeSelectChanged();
@@ -358,7 +256,7 @@
 
         $("#btnAddNewAbilitySelect").click(function () {
             var count = $("#tbbody_selectability >tr").length;
-            $("#tbbody_selectability").append("<tr><td class='col col-md-8'>" +
+            $("#tbbody_selectability").append("<tr><td class='col col-md-10'>" +
                 "<div class='form-group'>" +
                 "<label class='form-label'>Ability : </label>" +
                 "<select class='form-control typeability' name='Abilities[" + count + "].Id'></select></div>" +
@@ -369,7 +267,7 @@
                 "<div class='form-group'>" +
                 "<label class='form-label'>Type : </label>" +
                 "<input type='text' class='form-control abilitytype' name='Abilities[" + count + "].Type' readonly/></div>" +
-                "</td><td class='col col-md-4'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
+                "</td><td class='col col-md-2'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
 
             AddAbilitySelectOptions();
             abilitySelectChanged();

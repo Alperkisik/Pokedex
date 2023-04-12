@@ -36,6 +36,8 @@ namespace Pokedex.Controllers.Pokedex
         public IActionResult Create()
         {
             ViewBag.Types = _context.Types.ToList();
+            ViewBag.Abilities = _context.Abilities.ToList();
+
             return View(_view + "Create.cshtml");
         }
 
@@ -70,12 +72,13 @@ namespace Pokedex.Controllers.Pokedex
                     pokemon.Types = Types;
                 }
             }
-
-            ICollection<Ability> Abilities = new List<Ability>();
+            
             if (pokemon.Abilities != null)
             {
                 if (pokemon.Abilities.Count > 0)
                 {
+                    ICollection<Ability> Abilities = new List<Ability>();
+
                     foreach (var ability in pokemon.Abilities)
                     {
                         Abilities.Add(_context.Abilities.Find(ability.Id));
@@ -86,32 +89,88 @@ namespace Pokedex.Controllers.Pokedex
 
             if (ModelState.IsValid)
             {
-                await uploadedImage.CopyToAsync(new FileStream(path, FileMode.Create));
-
                 _context.Add(pokemon);
                 await _context.SaveChangesAsync();
+
+                try
+                {
+                    await uploadedImage.CopyToAsync(new FileStream(path, FileMode.Create));
+                }
+                catch (Exception)
+                {
+                    await uploadedImage.CopyToAsync(new FileStream(path, FileMode.Append));
+                }
+
                 return RedirectToAction(nameof(Index));
             }
 
             ViewBag.Types = _context.Types.ToList();
+            ViewBag.Abilities = _context.Abilities.ToList();
+
             return View(_view + "Create.cshtml", pokemon);
         }
 
         [Route(_url + "/Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Types = _context.Types.ToList();
+            ViewBag.Abilities = _context.Abilities.ToList();
+
             if (id == null || _context.Pokemons == null) return NotFound();
 
-            var pokemon = await _context.Pokemons.FindAsync(id);
+            var pokemon = await _context.Pokemons.Where(i => i.Id == id).Include(o => o.Types).Include(a => a.Abilities).FirstOrDefaultAsync();
             if (pokemon == null) return NotFound();
 
             return View(_view + "Edit.cshtml", pokemon);
         }
 
         [Route(_url + "/Edit"), HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NationalNo,Name,Description,Species,Height,Weight,FemaleGenderRatio,MaleGenderRatio,Image,HP,Attack,Defense,SpecialAttack,SpecialDefense,Speed")] Pokemon pokemon)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NationalNo,Name,Description,Species,Height,Weight,FemaleGenderRatio,MaleGenderRatio,Image,HP,Attack,Defense,SpecialAttack,SpecialDefense,Speed,Types,Abilities")] Pokemon pokemon, IFormFile uploadedImage)
         {
             if (id != pokemon.Id) return NotFound();
+
+            string extent = "", path = "", _fileName = "";
+
+            if (uploadedImage != null)
+            {
+                extent = Path.GetExtension(uploadedImage.FileName);
+
+                _fileName = pokemon.Name;
+
+                if (extent == ".png" || extent == ".jpeg" || extent == ".jpg")
+                {
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Pokemons", _fileName + extent);
+                    pokemon.Image = pokemon.Name + Path.GetExtension(uploadedImage.FileName);
+                }
+            }
+
+            if (pokemon.Types != null)
+            {
+                if (pokemon.Types.Count > 0)
+                {
+                    ICollection<Models.Type> Types = new List<Models.Type>();
+
+                    foreach (var type in pokemon.Types)
+                    {
+                        Types.Add(_context.Types.Find(type.Id));
+                    }
+                    pokemon.Types = Types;
+                }
+            }
+
+            if (pokemon.Abilities != null)
+            {
+                if (pokemon.Abilities.Count > 0)
+                {
+                    ICollection<Ability> Abilities = new List<Ability>();
+
+                    foreach (var ability in pokemon.Abilities)
+                    {
+                        Abilities.Add(_context.Abilities.Find(ability.Id));
+                    }
+                    pokemon.Abilities = Abilities;
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -119,6 +178,7 @@ namespace Pokedex.Controllers.Pokedex
                 {
                     _context.Update(pokemon);
                     await _context.SaveChangesAsync();
+                    await uploadedImage.CopyToAsync(new FileStream(path, FileMode.Append));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,6 +187,10 @@ namespace Pokedex.Controllers.Pokedex
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Types = _context.Types.ToList();
+            ViewBag.Abilities = _context.Abilities.ToList();
+
             return View(_view + "Edit.cshtml", pokemon);
         }
 
