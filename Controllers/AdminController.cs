@@ -15,10 +15,10 @@ namespace Pokedex.Controllers
 
         public IActionResult Login()
         {
-            HttpContext.Session.SetString("Username", "Alper");
-            return RedirectToAction("Index", "Admin");
+            //HttpContext.Session.SetString("Username", "Alper");
+            //return RedirectToAction("Index", "Admin");
 
-            //return View("Login");
+            return View("Login");
         }
 
         [HttpPost]
