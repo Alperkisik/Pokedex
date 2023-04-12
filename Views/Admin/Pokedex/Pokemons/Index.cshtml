@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Pokedex.Models.Pokemon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Pokemons</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Admin">Admin Home</a></li>
+                    <li class="breadcrumb-item active">PokedexPokemons</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">List</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <p>
+                            <a asp-action="Create">Create New</a>
+                        </p>
+                    </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Html.DisplayNameFor(model => model.NationalNo)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Species)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Height)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Weight)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FemaleGenderRatio)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.MaleGenderRatio)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.HP)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Attack)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Defense)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.SpecialAttack)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.SpecialDefense)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.Speed)</th>
+                                <th scope="col">Types</th>
+                                <th scope="col">Abilities</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Pokemon pokemon in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.NationalNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Description)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Species)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Height)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Weight)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.FemaleGenderRatio)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.MaleGenderRatio)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.HP)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Attack)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Defense)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.SpecialAttack)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.SpecialDefense)</td>
+                                    <td>@Html.DisplayFor(modelItem => pokemon.Speed)</td>
+                                    <td>
+                                        @foreach (Pokedex.Models.Type type in pokemon.Types)
+                                        {
+                                            <a asp-action="Edit" asp-controller="Types" asp-route-id="@type.Id">@type.Content</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (Ability ability in pokemon.Abilities)
+                                        {
+                                            <a asp-action="Edit" asp-controller="Abilities" asp-route-id="@ability.Id">@ability.Name</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@pokemon.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@pokemon.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@pokemon.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.NationalNo)</th>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                                <th>@Html.DisplayNameFor(model => model.Species)</th>
+                                <th>@Html.DisplayNameFor(model => model.Height)</th>
+                                <th>@Html.DisplayNameFor(model => model.Weight)</th>
+                                <th>@Html.DisplayNameFor(model => model.FemaleGenderRatio)</th>
+                                <th>@Html.DisplayNameFor(model => model.MaleGenderRatio)</th>
+                                <th>@Html.DisplayNameFor(model => model.HP)</th>
+                                <th>@Html.DisplayNameFor(model => model.Attack)</th>
+                                <th>@Html.DisplayNameFor(model => model.Defense)</th>
+                                <th>@Html.DisplayNameFor(model => model.SpecialAttack)</th>
+                                <th>@Html.DisplayNameFor(model => model.SpecialDefense)</th>
+                                <th>@Html.DisplayNameFor(model => model.Speed)</th>
+                                <th>Types</th>
+                                <th>Abilities</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

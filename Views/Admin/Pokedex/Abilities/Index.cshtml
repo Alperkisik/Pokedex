@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Pokedex.Models.Ability>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Abilities</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Admin">Admin Home</a></li>
+                    <li class="breadcrumb-item active">PokedexAbilities</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">List</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <p><a asp-action="Create">Create New</a></p>
+                    </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Effect)</th>
+                                <th>@Html.DisplayNameFor(model => model.Type)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Ability ability in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => ability.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => ability.Effect)</td>
+                                    <td>@Html.DisplayFor(modelItem => ability.Type)</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@ability.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@ability.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@ability.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Effect)</th>
+                                <th>@Html.DisplayNameFor(model => model.Type)</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,418 @@
+﻿@model Pokedex.Models.Pokemon
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Pokedex.Models.Type> Types = ViewBag.Types;
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Pokemon</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Admin">Admin Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">PokedexPokemons</a></li>
+                    <li class="breadcrumb-item active">Create</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create</h3>
+                </div>
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col">
+                                <label class="control-label"></label>
+                                <input class="form-control-file border rounded" type="file" name="uploadedImage" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="NationalNo" class="control-label"></label>
+                                    <input asp-for="NationalNo" class="form-control" />
+                                    <span asp-validation-for="NationalNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Species" class="control-label"></label>
+                                    <input asp-for="Species" class="form-control" />
+                                    <span asp-validation-for="Species" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Height" class="control-label"></label>
+                                    <input asp-for="Height" class="form-control" />
+                                    <span asp-validation-for="Height" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Weight" class="control-label"></label>
+                                    <input asp-for="Weight" class="form-control" />
+                                    <span asp-validation-for="Weight" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FemaleGenderRatio" class="control-label"></label>
+                                    <input asp-for="FemaleGenderRatio" class="form-control" />
+                                    <span asp-validation-for="FemaleGenderRatio" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MaleGenderRatio" class="control-label"></label>
+                                    <input asp-for="MaleGenderRatio" class="form-control" />
+                                    <span asp-validation-for="MaleGenderRatio" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body row">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Types</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td class="col col-md-8"></td>
+                                                <td class="col col-md-4"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbbody_selecttype">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2"><input type="button" id="btnAddNewTypeSelect" value="Add New Type" class="btn btn-primary" /></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Abilities</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td class="col col-md-8"></td>
+                                                <td class="col col-md-4"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbbody_selectability">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2"><input type="button" id="btnAddNewAbilitySelect" value="Add New Ability" class="btn btn-primary" /></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*
+                    <div class="card-body row">
+                    <div class="col-md-6">
+                    <div class="card card-primary">
+                    <div class="card-header">
+                    <h3 class="card-title">Types</h3>
+                    </div>
+                    <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                    <td>Type</td>
+                    <td></td>
+                    </tr>
+                    </thead>
+                    <tbody id="tbbody_type">
+                    @if (Model == null || Model.Types == null || Model.Types.Count == 0)
+                    {
+                    }
+                    else if (Model.Types != null && Model.Types.Count > 0)
+                    {
+                    @for (var i = 0; i < Model.Types.Count; i++)
+                    {
+                    <tr>
+                    <td>
+                    <input class="form-control" type="text" name="Types[@i].Content" value="@Model.Types.ToList()[i].Content">
+                    <input class="form-control d-none" type="text" name="Types[@i].Id" value="@Model.Types.ToList()[i].Id">
+                    </td>
+                    <td></td>
+                    </tr>
+                    }
+                    }
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                    <td colspan="2"><input type="button" id="btnAddNewType" value="Add New Type" class="btn btn-primary" /></td>
+                    </tr>
+                    </tfoot>
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="card card-primary">
+                    <div class="card-header">
+                    <h3 class="card-title">Abilities</h3>
+                    </div>
+                    <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                    <td>Name</td>
+                    <td></td>
+                    </tr>
+                    </thead>
+                    <tbody id="tbbody">
+                    @if (Model == null || Model.Abilities == null || Model.Abilities.Count == 0)
+                    {
+                    }
+                    else if (Model.Abilities != null && Model.Abilities.Count > 0)
+                    {
+                    @for (var i = 0; i < Model.Abilities.Count; i++)
+                    {
+                    <tr>
+                    <td>
+                    <input class="form-control d-none" type="text" name="Abilities[@i].Id" value="@Model.Abilities.ToList()[i].Id">
+                    <input class="form-control d-none" type="text" name="Abilities[@i].Type" value="@Model.Abilities.ToList()[i].Type">
+                    <input class="form-control d-none" type="text" name="Abilities[@i].Effect" value="@Model.Abilities.ToList()[i].Effect">
+                    <input class="form-control" type="text" name="Abilities[@i].Name" value="@Model.Abilities.ToList()[i].Name">
+                    </td>
+                    <td></td>
+                    </tr>
+                    }
+                    }
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                    <td colspan="2"><input type="button" id="btnAddNewAbility" value="Add New Ability" class="btn btn-primary" /></td>
+                    </tr>
+                    </tfoot>
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+                    </div>*@
+                    <div class="card-body">
+                        <div class="row">
+                            <h3 class="card-title">Stats</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="HP" class="control-label"></label>
+                                    <input asp-for="HP" class="form-control" />
+                                    <span asp-validation-for="HP" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Attack" class="control-label"></label>
+                                    <input asp-for="Attack" class="form-control" />
+                                    <span asp-validation-for="Attack" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Defense" class="control-label"></label>
+                                    <input asp-for="Defense" class="form-control" />
+                                    <span asp-validation-for="Defense" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SpecialAttack" class="control-label"></label>
+                                    <input asp-for="SpecialAttack" class="form-control" />
+                                    <span asp-validation-for="SpecialAttack" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SpecialDefense" class="control-label"></label>
+                                    <input asp-for="SpecialDefense" class="form-control" />
+                                    <span asp-validation-for="SpecialDefense" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Speed" class="control-label"></label>
+                                    <input asp-for="Speed" class="form-control" />
+                                    <span asp-validation-for="Speed" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    var alltypes = {};
+    var allabilities = {};
+
+    $.ajax({
+        url: '/Admin/PokedexPokemons/GetPokemonTypes',
+        type: "GET",
+        dataType: "JSON",
+        data: {},
+        success: function (types) {
+            alltypes = types;
+        }
+    });
+
+    $.ajax({
+        url: '/Admin/PokedexPokemons/GetPokemonAbilities',
+        type: "GET",
+        dataType: "JSON",
+        data: {},
+        success: function (abilities) {
+            allabilities = abilities;
+        }
+    });
+
+    $(function () {
+        /*$("#btnAddNewType").click(function () {
+            var count = $("#tbbody_type >tr").length;
+            $("#tbbody_type").append("<tr><td> <input type='text' class='form-control' name='Types[" + count + "].Content' />" +
+                "<input type='text' class='d-none' name='Types[" + count + "].Id' value='0' />" +
+                " </td><td><input type='button' class='btnremove' value='remove'/></td></tr>");
+
+            AddRemoveAction();
+        });
+
+        $("#btnAddNewAbility").click(function () {
+            var count = $("#tbbody >tr").length;
+            $("#tbbody").append("<tr><td> <input type='text' class='form-control' name='Abilities[" + count + "].Name' />" +
+                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Id' value='0' />" +
+                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Effect' value='none' />" +
+                "<input type='text' class='form-control d-none' name='Abilities[" + count + "].Type' value='none' />" +
+                "</td><td><input type='button' class='btnremove' value='remove'/></td></tr>");
+
+            AddRemoveAction();
+        });*/
+
+        $("#btnAddNewTypeSelect").click(function () {
+            var count = $("#tbbody_selecttype >tr").length;
+            $("#tbbody_selecttype").append("<tr><td class='col col-md-8'><div class='form-group'><label class='form-label'>Type : </label> <select class='form-control typeselect' name='Types[" + count + "].Id'></select>" +
+                "<input type='text' class='form-control typecontent d-none' name='Types[" + count + "].Content' readonly/></div>" +
+                "</td><td class='col col-md-4'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
+
+            AddTypeSelectOptions();
+            typeSelectChanged();
+            AddRemoveAction();
+        });
+
+        $("#btnAddNewAbilitySelect").click(function () {
+            var count = $("#tbbody_selectability >tr").length;
+            $("#tbbody_selectability").append("<tr><td class='col col-md-8'>" +
+                "<div class='form-group'>" +
+                "<label class='form-label'>Ability : </label>" +
+                "<select class='form-control typeability' name='Abilities[" + count + "].Id'></select></div>" +
+                "<div class='form-group'>" +
+                "<input type='text' class='form-control abilityname d-none' name='Abilities[" + count + "].Name' readonly/>" +
+                "<label class='form-label'>Effect : </label>" +
+                "<textarea type='text' class='form-control abilityeffect' name='Abilities[" + count + "].Effect' readonly></textarea></div>" +
+                "<div class='form-group'>" +
+                "<label class='form-label'>Type : </label>" +
+                "<input type='text' class='form-control abilitytype' name='Abilities[" + count + "].Type' readonly/></div>" +
+                "</td><td class='col col-md-4'><div class='text-center'><input type='button' class='btnremove btn btn-primary' value='remove'/></div></td></tr>");
+
+            AddAbilitySelectOptions();
+            abilitySelectChanged();
+            AddRemoveAction();
+        });
+
+        AddRemoveAction();
+
+        function AddTypeSelectOptions() {
+            $(".typeselect").last().append("<option selected disabled>----- Choose a Type -----</option>");
+            $.each(alltypes, function (i, type) {
+                $(".typeselect").last().append("<option value='" + type.id + "'>" + type.content + "</option>");
+            });
+        }
+
+        function AddAbilitySelectOptions() {
+            $(".typeability").last().append("<option selected disabled>----- Choose an Ability -----</option>");
+            $.each(allabilities, function (i, ability) {
+                $(".typeability").last().append("<option value='" + ability.id + "'>" + ability.name + "</option>");
+            });
+        }
+
+        function AddRemoveAction() {
+            $(".btnremove").each(function (index, item) {
+                $(item).click(function () {
+                    $(this).closest('tr').remove();
+                });
+
+            })
+        }
+
+        function typeSelectChanged() {
+            $('select.typeselect').on('change', function () {
+                $(this).parent().parent().children('div.form-group').children('input.typecontent').val(alltypes[this.value - 1].content);
+            });
+        }
+
+        function abilitySelectChanged() {
+            $('select.typeability').on('change', function () {
+                $(this).parent().parent().children('div.form-group').children('input.abilityname').val(allabilities[this.value - 1].name);
+                $(this).parent().parent().children('div.form-group').children('textarea.abilityeffect').val(allabilities[this.value - 1].effect);
+                $(this).parent().parent().children('div.form-group').children('input.abilitytype').val(allabilities[this.value - 1].type);
+            });
+        }
+    });
+</script>

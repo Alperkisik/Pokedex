@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Pokedex.Models.Pokemon>
+
+@{
+    ViewData["Title"] = "Pokemons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="card bg-light rounded">
+        <div class="card-header">
+            <h2 class="card-title">Pokemons</h2>
+        </div>
+        <div class="card-body">
+            <div class="row row-cols row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                @foreach (var pokemon in Model)
+                {
+                    <div class="col">
+                        <div class="card">
+                            <img class="card-img-top p-3 pb-0" src="~/images/Pokemons/@pokemon.Image" alt="Card image cap" style="width: 18rem;">
+                            <p class="m-0 mx-auto">#@pokemon.NationalNo</p>
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">@pokemon.Name</a></h5>
+                            </div>
+                            <div class="card-footer d-flex">
+                                @if (pokemon.Types != null)
+                                {
+                                    @foreach (var type in pokemon.Types)
+                                    {
+                                        <span class="badge bg-primary">@type.Content</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
