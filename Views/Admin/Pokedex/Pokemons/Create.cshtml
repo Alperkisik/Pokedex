@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    List<Pokedex.Models.Type> Types = ViewBag.Types;
+    List<Pokedex.Models.Type> Typess = ViewBag.Types;
+    List<Ability> Abilitiess = ViewBag.Abilities;
 
     int count = 1;
 }
@@ -119,7 +120,46 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbbody_selecttype">
-                                            
+                                            @if (Model != null)
+                                            {
+                                                @if (Model.Types != null && Model.Types.Count > 0)
+                                                {
+                                                    @for (var i = 0; i < Model.Types.Count; i++)
+                                                    {
+
+                                                        <tr>
+                                                            <td class="col col-md-10">
+                                                                <div class="form-group">
+                                                                    <input class="form-control d-none" name="Types[@i].Id" value="@Model.Types.ToList()[i].Id" />
+                                                                    <label class="form-label">Type :</label>
+                                                                    <select class="form-control typeselect" name="Types[@i].Id">
+                                                                        <option disabled>----- Choose a Type -----</option>
+                                                                        @{
+                                                                            count = 1;
+                                                                        }
+                                                                        @foreach (var item in Typess)
+                                                                        {
+                                                                            if (Model.Types.ToList()[i].Id == count)
+                                                                            {
+                                                                                <option value="@item.Id" selected>@item.Content</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@item.Id">@item.Content</option>
+                                                                            }
+                                                                            count++;
+                                                                        }
+                                                                    </select>
+                                                                    <input type="text" class="form-control typecontent d-none" name="Types[@i].Content" value="@Model.Types.ToList()[i].Content" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="col col-md-2">
+                                                                <div class="text-center"><input type="button" class="btnremove btn btn-primary" value="remove" /></div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -144,6 +184,53 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbbody_selectability">
+                                            @if (Model != null)
+                                            {
+                                                @if (Model.Abilities != null && Model.Abilities.Count > 0)
+                                                {
+                                                    @for (var i = 0; i < Model.Abilities.Count; i++)
+                                                    {
+                                                        <tr>
+                                                            <td class="col col-md-10">
+                                                                <div class="form-group">
+                                                                    <input class="form-control d-none" name="Abilities[@i].Id" value="@Model.Abilities.ToList()[i].Id" />
+                                                                    <label class="form-label">Ability :</label>
+                                                                    <select class="form-control typeability" name="Abilities[@i].Id">
+                                                                        <option disabled>----- Choose an Ability -----</option>
+                                                                        @{
+                                                                            count = 1;
+                                                                        }
+                                                                        @foreach (var item in Abilitiess)
+                                                                        {
+                                                                            if (Model.Abilities.ToList()[i].Id == count)
+                                                                            {
+                                                                                <option value="@item.Id" selected>@item.Name</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@item.Id">@item.Name</option>
+                                                                            }
+                                                                            count++;
+                                                                        }
+                                                                    </select>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control typecontent d-none" name="Abilities[@i].Name" value="@Model.Abilities.ToList()[i].Name" />
+                                                                        <label class="form-label">Effect :</label>
+                                                                        <textarea type="text" class="form-control abilityeffect" name="Abilities[@i].Effect" readonly>@Model.Abilities.ToList()[i].Effect</textarea>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Type :</label>
+                                                                        <input type="text" class="form-control abilitytype" name="Abilities[@i].Type" readonly value="@Model.Abilities.ToList()[i].Type" />
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col col-md-2">
+                                                                <div class="text-center"><input type="button" class="btnremove btn btn-primary" value="remove" /></div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
                                         </tbody>
                                         <tfoot>
                                             <tr>
