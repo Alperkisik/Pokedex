@@ -25,7 +25,9 @@ namespace Pokedex.Controllers.Pokedex
         [Route(_url)]
         public async Task<IActionResult> Index()
         {
-            List<Pokemon> pokemons = _context.Pokemons.Include(o => o.Types).Include(a => a.Abilities).ToList();
+            //List<Pokemon> pokemons = _context.Pokemons.Include(o => o.Types).Include(a => a.Abilities).ToList();
+            //List<Pokemon> list2 = _context.Pokemons.ToList();
+            //List<Pokemon> list = _context.Pokemons.To_List_IncludeRelationships();
             return _context.Pokemons != null ?
                         View(_view + "Index.cshtml", await _context.Pokemons.Include(o => o.Types).Include(a => a.Abilities).ToListAsync()) :
                         Problem("Entity set 'PokedexContext.Pokemons'  is null.");
@@ -58,8 +60,9 @@ namespace Pokedex.Controllers.Pokedex
                     pokemon.Image = pokemon.Name + Path.GetExtension(uploadedImage.FileName);
                 }
             }
+            else pokemon.Image = "";
 
-            if (pokemon.Types != null)
+            /*if (pokemon.Types != null)
             {
                 if (pokemon.Types.Count > 0)
                 {
@@ -85,7 +88,7 @@ namespace Pokedex.Controllers.Pokedex
                     }
                     pokemon.Abilities = Abilities;
                 }
-            }
+            }*/
 
             if (ModelState.IsValid)
             {
@@ -212,9 +215,7 @@ namespace Pokedex.Controllers.Pokedex
             return View(pokemon);
         }
 
-        // POST: Pokemons/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [Route(_url + "/Delete/{id}"), HttpPost, ActionName("Delete"), ValidateAntiForgeryToken,]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Pokemons == null)
